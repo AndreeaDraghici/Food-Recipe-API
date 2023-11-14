@@ -174,4 +174,3 @@ class Logic{
     const getReciepe = new GetReciepe()
     const logic = new Logic()
     logic.searchReceipe();
-    

@@ -58,13 +58,17 @@ class Logic {
       data.forEach((item: any) => {
         display += `
           <div class="single-meal">
+
             <div class="meal-img">
               <img src="${item.strMealThumb}" alt="${item.strMeal}" />
             </div>
+
             <span>${this.checkNameLength(item.strMeal)}</span>
+
             <div class="view-recipe">
               <button class="view-recipe-btn" data-id="${item.idMeal}">View Recipe</button>
             </div>
+            
           </div>
         `;
       });
@@ -84,6 +88,7 @@ class Logic {
     } else {
       searchName.textContent = `"${input.value}" related recipes`;
     }
+
     searchName.style.color = "orangeRed";
     inst.style.display = "none";
   }
@@ -93,6 +98,7 @@ class Logic {
     searchName.style.color = "red";
     mealContainer.innerHTML = "";
     inst.style.display = "none";
+
     setTimeout(() => {
       searchName.textContent = "";
       searchName.style.color = "orangeRed";
@@ -120,9 +126,11 @@ class Logic {
             } else {
               console.error("Invalid target element.");
             }
+
           } else {
             console.error("Invalid or missing 'data-id' attribute.");
           }
+
         } catch (error) {
           console.error("An error occurred:", error);
         }
@@ -142,47 +150,57 @@ class Logic {
     }
   }
   
+
   displayDetails(data: any): void {
     modal.classList.remove("hide");
     wrapper.classList.remove("hide");
     let display: string = `
       <div class="modal">
         <div class="details">
+
           <div class="cancel">
             <i class="fa-solid fa-circle-xmark"></i>
           </div>
+
           <div class="img">
             <img src="${singleImg}" alt="${data.meals[0].strMeal}" />
           </div>
+
           <div class="instruction-step">
             <span style="color: black;">INSTRUCTIONS FOR ${data.meals[0].strMeal}:</span>
             <p class="steps">${data.meals[0].strInstructions}</p>
           </div>
+
           <div class="link">
             <i class="fa-brands fa-youtube"></i>
             <a href="${data.meals[0].strYoutube}" target="_blank" rel="noopener noreferrer">Click to watch video</a>
           </div>
+
         </div>
       </div>
     `;
     modal.innerHTML = display;
   }
 
+
   getExitBtn(): void {
     let exitBtn: HTMLElement = document.querySelector(".fa-circle-xmark") as HTMLElement;
     exitBtn.addEventListener("click", () => {
       this.closeModal();
     });
+
     wrapper.addEventListener("click", () => {
       this.closeModal();
     });
   }
+
 
   closeModal(): void {
     modal.classList.add("hide");
     wrapper.classList.add("hide");
   }
 }
+
 
 const logic: Logic = new Logic();
 logic.searchRecipe();

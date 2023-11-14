@@ -38,5 +38,5 @@ Welcome to the Food Recipes App! This application allows users to search for tas
 
 
 4. Compile TypeScript to JavaScript.
-  ```bash
-   tsc
+     ```bash
+      tsc

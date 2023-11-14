@@ -23,12 +23,16 @@ class GetRecipe {
     getData() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                if (!input.value) {
+                    throw new Error('Please enter an ingredient before searching.');
+                }
                 let res = yield fetch(`${ApiURL}${input.value.trim()}`);
                 let data = yield res.json();
                 return data;
             }
             catch (error) {
-                alert(`${error} Refresh the page`);
+                console.error('Error during recipe search:', error);
+                throw error;
             }
         });
     }
@@ -59,6 +63,9 @@ class Logic {
             })
                 .then(() => {
                 this.getViewButtons();
+            })
+                .catch((error) => {
+                console.error('Recipe search failed:', error);
             });
         });
     }
@@ -71,13 +78,17 @@ class Logic {
             data.forEach((item) => {
                 display += `
           <div class="single-meal">
+
             <div class="meal-img">
               <img src="${item.strMealThumb}" alt="${item.strMeal}" />
             </div>
+
             <span>${this.checkNameLength(item.strMeal)}</span>
+
             <div class="view-recipe">
               <button class="view-recipe-btn" data-id="${item.idMeal}">View Recipe</button>
             </div>
+
           </div>
         `;
             });
@@ -156,6 +167,7 @@ class Logic {
         let display = `
       <div class="modal">
         <div class="details">
+
           <div class="cancel">
             <i class="fa-solid fa-circle-xmark"></i>
           </div>
@@ -170,6 +182,7 @@ class Logic {
             <i class="fa-brands fa-youtube"></i>
             <a href="${data.meals[0].strYoutube}" target="_blank" rel="noopener noreferrer">Click to watch video</a>
           </div>
+
         </div>
       </div>
     `;

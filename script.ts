@@ -12,16 +12,21 @@ const ApiURL: string = "https://www.themealdb.com/api/json/v1/1/filter.php?i=";
 const detailsURL: string = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
 
 class GetRecipe {
-  async getData(): Promise<any> {
-    try {
-      let res: Response = await fetch(`${ApiURL}${input.value.trim()}`);
-      let data: any = await res.json();
-      return data;
-    } catch (error) {
-      alert(`${error} Refresh the page`);
-    }
-  }
-
+    async getData(): Promise<any> {
+        try {
+          if (!input.value) {
+            throw new Error('Please enter an ingredient before searching.');
+          }
+    
+          let res: Response = await fetch(`${ApiURL}${input.value.trim()}`);
+          let data: any = await res.json();
+          return data;
+        } catch (error) {
+          console.error('Error during recipe search:', error);
+          throw error;
+        }
+      }
+    
   async getRecipeDetails(id: string): Promise<any> {
     try {
       let res: Response = await fetch(`${detailsURL}${id}`);
@@ -46,6 +51,9 @@ class Logic {
         })
         .then(() => {
           this.getViewButtons();
+        })
+        .catch((error) => {
+          console.error('Recipe search failed:', error);
         });
     });
   }
@@ -68,7 +76,7 @@ class Logic {
             <div class="view-recipe">
               <button class="view-recipe-btn" data-id="${item.idMeal}">View Recipe</button>
             </div>
-            
+
           </div>
         `;
       });
@@ -126,11 +134,9 @@ class Logic {
             } else {
               console.error("Invalid target element.");
             }
-
           } else {
             console.error("Invalid or missing 'data-id' attribute.");
           }
-
         } catch (error) {
           console.error("An error occurred:", error);
         }
@@ -161,16 +167,13 @@ class Logic {
           <div class="cancel">
             <i class="fa-solid fa-circle-xmark"></i>
           </div>
-
           <div class="img">
             <img src="${singleImg}" alt="${data.meals[0].strMeal}" />
           </div>
-
           <div class="instruction-step">
             <span style="color: black;">INSTRUCTIONS FOR ${data.meals[0].strMeal}:</span>
             <p class="steps">${data.meals[0].strInstructions}</p>
           </div>
-
           <div class="link">
             <i class="fa-brands fa-youtube"></i>
             <a href="${data.meals[0].strYoutube}" target="_blank" rel="noopener noreferrer">Click to watch video</a>
@@ -200,7 +203,6 @@ class Logic {
     wrapper.classList.add("hide");
   }
 }
-
 
 const logic: Logic = new Logic();
 logic.searchRecipe();

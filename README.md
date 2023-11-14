@@ -29,15 +29,14 @@ Welcome to the Food Recipes App! This application allows users to search for tas
 
 2. Navigate to the project directory.
    ```bash
-   cd Food-Recipe-API
-
+      cd Food-Recipe-API
 
 
 3. Install dependencies.
-  ```bash
-  npm install
+     ```bash
+     npm install
 
 
 4. Compile TypeScript to JavaScript.
   ```bash
-  tsc
+     tsc
